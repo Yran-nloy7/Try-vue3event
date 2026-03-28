@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('@/views/layout/LayoutContainer.vue'),
-      redirect: '/article/manage',
+      redirect: '/login',
       children: [
         {
           path: '/article/manage',
