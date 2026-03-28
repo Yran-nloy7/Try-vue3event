@@ -2,6 +2,7 @@
 import { userRegisterService } from '@/api/user'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+
 const isRegister = ref(false)
 const form = ref(null)
 
@@ -9,8 +10,15 @@ const form = ref(null)
 const formModel = ref({
   username: '',
   password: '',
-  rePassword: ''
+  rePassword: '',
 })
+
+// 登录表单数据（修复登录写不上问题）
+const loginForm = ref({
+  username: '',
+  password: '',
+})
+
 // 校验规则对象
 // blur和change分别表示失去焦点和内容改变时触发校验
 // min和max分别表示最小长度和最大长度，pattern表示正则表达式，message表示校验失败时的提示信息
@@ -20,22 +28,22 @@ const formModel = ref({
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 5, max: 20, message: '长度必须在 5 - 20', trigger: 'blur' }
+    { min: 5, max: 20, message: '长度必须在 5 - 20', trigger: 'blur' },
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
       pattern: /^.{6,15}$/,
       message: '密码长度必须在 6-15 位的非空字符',
-      trigger: 'blur'
-    }
+      trigger: 'blur',
+    },
   ],
   rePassword: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
       pattern: /^.{6,15}$/,
       message: '密码长度必须在 6-15 位的非空字符',
-      trigger: 'blur'
+      trigger: 'blur',
     },
     {
       validator: (rule, value, callback) => {
@@ -45,17 +53,34 @@ const rules = {
           callback()
         }
       },
-      trigger: 'blur'
-    }
-  ]
+      trigger: 'blur',
+    },
+  ],
 }
 
+// ====================== 注册 ======================
 const register = async () => {
-  // 进行表单校验，校验成功后才会执行注册请求，校验失败时会在表单项下方显示错误信息
-  await form.value.validate()
-  await userRegisterService(formModel.value)
-  alert('注册成功')
-  isRegister.value = false
+  try {
+    // 1. 表单校验
+    await form.value.validate()
+
+    // 2. 调用接口
+    await userRegisterService(formModel.value)
+
+    // 3. 成功
+    alert('✅ 注册成功')
+    isRegister.value = false // 切回登录
+  } catch (err) {
+    // 4. 失败（关键！！！）
+    console.error(err)
+    alert('❌ 注册失败：' + (err.response?.data?.message || '网络异常或用户名重复'))
+  }
+}
+
+// ====================== 登录 ======================
+const login = () => {
+  alert('登录功能待实现')
+  // 这里以后写登录逻辑
 }
 </script>
 
@@ -115,34 +140,32 @@ const register = async () => {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            @click="register"
-            class="button"
-            type="primary"
-            auto-insert-space
-          >
+          <el-button @click="register" class="button" type="primary" auto-insert-space>
             注册
           </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = false">
-            ← 返回
-          </el-link>
+          <el-link type="info" :underline="false" @click="isRegister = false"> ← 返回 </el-link>
         </el-form-item>
       </el-form>
+
       <!-- 登录相关 -->
-      <el-form ref="form" size="large" autocomplete="off" v-else>
+      <el-form :model="loginForm" ref="loginFormRef" size="large" autocomplete="off" v-else>
         <el-form-item>
           <h1>登录</h1>
         </el-form-item>
         <el-form-item>
-          <el-input :prefix-icon="User" placeholder="请输入用户名"></el-input>
+          <el-input
+            :prefix-icon="User"
+            v-model="loginForm.username"
+            placeholder="请输入用户名"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-input
-            name="password"
             :prefix-icon="Lock"
             type="password"
+            v-model="loginForm.password"
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
@@ -153,14 +176,12 @@ const register = async () => {
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button class="button" type="primary" auto-insert-space
-            >登录</el-button
-          >
+          <el-button @click="login" class="button" type="primary" auto-insert-space>
+            登录
+          </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = true">
-            注册 →
-          </el-link>
+          <el-link type="info" :underline="false" @click="isRegister = true"> 注册 → </el-link>
         </el-form-item>
       </el-form>
     </el-col>
