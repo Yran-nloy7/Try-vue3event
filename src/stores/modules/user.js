@@ -11,13 +11,22 @@ export const useUserStore = defineStore(
     const removeToken = () => {
       token.value = ''
     }
+
+    const user = ref({})
+    const getUser = async () => {
+      const res = await userGetInfoService() //請求獲取數據
+      user.value = res.data.data
+    }
+
     return {
       token,
       setToken,
-      removeToken
+      removeToken,
+      user,
+      getUser,
     }
   },
   {
-    persist: true
-  }
+    persist: true,
+  },
 )
