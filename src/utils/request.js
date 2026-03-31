@@ -6,7 +6,7 @@ const baseURL = 'http://big-event-vue-api-t.itheima.net'
 
 const instance = axios.create({
   baseURL,
-  timeout: 10000,
+  timeout: 10000
 })
 
 // 请求拦截器
@@ -18,7 +18,7 @@ instance.interceptors.request.use(
     }
     return config
   },
-  (err) => Promise.reject(err),
+  (err) => Promise.reject(err)
 )
 
 // 响应拦截器
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
 
     ElMessage.error(err.response.data.message || '服务异常')
     return Promise.reject(err)
-  },
+  }
 )
 
 export default instance

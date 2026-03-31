@@ -15,27 +15,27 @@ const router = createRouter({
       children: [
         {
           path: '/article/manage',
-          component: () => import('@/views/article/ArticleManage.vue'),
+          component: () => import('@/views/article/ArticleManage.vue')
         },
         {
           path: '/article/channel',
-          component: () => import('@/views/article/ArticleChannel.vue'),
+          component: () => import('@/views/article/ArticleChannel.vue')
         },
         {
           path: '/user/profile',
-          component: () => import('@/views/user/UserProfile.vue'),
+          component: () => import('@/views/user/UserProfile.vue')
         },
         {
           path: '/user/avatar',
-          component: () => import('@/views/user/UserAvatar.vue'),
+          component: () => import('@/views/user/UserAvatar.vue')
         },
         {
           path: '/user/password',
-          component: () => import('@/views/user/UserPassword.vue'),
-        },
-      ],
-    },
-  ],
+          component: () => import('@/views/user/UserPassword.vue')
+        }
+      ]
+    }
+  ]
 })
 
 // 登录访问拦截（正确写法）

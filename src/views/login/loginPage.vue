@@ -4,6 +4,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { ref, watch } from 'vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 const isRegister = ref(false)
 const form = ref()
 
@@ -11,7 +12,7 @@ const form = ref()
 const formModel = ref({
   username: '',
   password: '',
-  repassword: '',
+  repassword: ''
 })
 // 校验规则对象
 // blur和change分别表示失去焦点和内容改变时触发校验
@@ -22,22 +23,22 @@ const formModel = ref({
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 5, max: 10, message: '用户名必须是 5-10位 的字符', trigger: 'blur' },
+    { min: 5, max: 10, message: '用户名必须是 5-10位 的字符', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
       pattern: /^\S{6,15}$/,
       message: '密码必须是 6-15位 的非空字符',
-      trigger: 'blur',
-    },
+      trigger: 'blur'
+    }
   ],
   repassword: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     {
       pattern: /^\S{6,15}$/,
       message: '密码必须是 6-15位 的非空字符',
-      trigger: 'blur',
+      trigger: 'blur'
     },
     {
       validator: (rule, value, callback) => {
@@ -48,9 +49,9 @@ const rules = {
           callback() // 就算校验成功，也需要callback
         }
       },
-      trigger: 'blur',
-    },
-  ],
+      trigger: 'blur'
+    }
+  ]
 }
 
 const register = async () => {
@@ -76,7 +77,7 @@ watch(isRegister, () => {
   formModel.value = {
     username: '',
     password: '',
-    repassword: '',
+    repassword: ''
   }
 })
 </script>
@@ -136,17 +137,31 @@ watch(isRegister, () => {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="register" class="button" type="primary" auto-insert-space>
+          <el-button
+            @click="register"
+            class="button"
+            type="primary"
+            auto-insert-space
+          >
             注册
           </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = false"> ← 返回 </el-link>
+          <el-link type="info" :underline="false" @click="isRegister = false">
+            ← 返回
+          </el-link>
         </el-form-item>
       </el-form>
 
       <!-- 登录相关表单 -->
-      <el-form :model="formModel" :rules="rules" ref="form" size="large" autocomplete="off" v-else>
+      <el-form
+        :model="formModel"
+        :rules="rules"
+        ref="form"
+        size="large"
+        autocomplete="off"
+        v-else
+      >
         <el-form-item>
           <h1>登录</h1>
         </el-form-item>
@@ -173,10 +188,18 @@ watch(isRegister, () => {
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button @click="login" class="button" type="primary" auto-insert-space>登录</el-button>
+          <el-button
+            @click="login"
+            class="button"
+            type="primary"
+            auto-insert-space
+            >登录</el-button
+          >
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = true"> 注册 → </el-link>
+          <el-link type="info" :underline="false" @click="isRegister = true">
+            注册 →
+          </el-link>
         </el-form-item>
       </el-form>
     </el-col>
