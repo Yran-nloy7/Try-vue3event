@@ -4,7 +4,6 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { ref, watch } from 'vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
 const isRegister = ref(false)
 const form = ref()
 
@@ -14,7 +13,6 @@ const formModel = ref({
   password: '',
   repassword: '',
 })
-
 // 校验规则对象
 // blur和change分别表示失去焦点和内容改变时触发校验
 // min和max分别表示最小长度和最大长度，pattern表示正则表达式，message表示校验失败时的提示信息
@@ -70,7 +68,7 @@ const login = async () => {
   const res = await userLoginService(formModel.value)
   userStore.setToken(res.data.token)
   ElMessage.success('登录成功')
-  router.push('/')
+  router.push('/article/channel')
 }
 
 // 切换的时候，重置表单内容

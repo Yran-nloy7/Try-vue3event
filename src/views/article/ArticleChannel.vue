@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
 import { artGetChannelsService, artDelChannelService } from '../../api/article'
 import ChannelEdit from './components/ChannelEdit.vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 const channelList = ref([])
 const loading = ref(false)
 const dialog = ref()
@@ -19,7 +20,7 @@ const onDelChannel = async (row) => {
   await ElMessageBox.confirm('你确认要删除该分类么', '温馨提示', {
     type: 'warning',
     confirmButtonText: '确认',
-    cancelButtonText: '取消',
+    cancelButtonText: '取消'
   })
   await artDelChannelService(row.id)
   ElMessage.success('删除成功')

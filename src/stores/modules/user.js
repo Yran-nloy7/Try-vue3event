@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { userInfoService as userGetInfoService } from '@/api/user.js'
 // vue3:token setToken removeToken
 export const useUserStore = defineStore(
   'big-user',
@@ -23,10 +24,10 @@ export const useUserStore = defineStore(
       setToken,
       removeToken,
       user,
-      getUser,
+      getUser
     }
   },
   {
-    persist: true,
-  },
+    persist: true
+  }
 )
