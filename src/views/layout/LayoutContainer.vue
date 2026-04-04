@@ -7,7 +7,7 @@ import {
   Crop,
   EditPen,
   SwitchButton,
-  CaretBottom,
+  CaretBottom
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
 import { useUserStore } from '@/stores'
@@ -22,7 +22,7 @@ const handleCommand = async (key) => {
     await ElMessageBox.confirm('你确认要进行退出么', '温馨提示', {
       type: 'warning',
       confirmButtonText: '确认',
-      cancelButtonText: '取消',
+      cancelButtonText: '取消'
     })
 
     // 清除本地的数据
@@ -88,7 +88,9 @@ const handleCommand = async (key) => {
     <el-container>
       <el-header>
         <div>
-          黑马程序员：<strong>{{ userStore.user.nickname || userStore.user.username }}</strong>
+          黑马程序员：<strong>{{
+            userStore.user.nickname || userStore.user.username
+          }}</strong>
         </div>
         <el-dropdown placement="bottom-end" @command="handleCommand">
           <!-- 展示给用户 -->
@@ -100,10 +102,18 @@ const handleCommand = async (key) => {
           <!-- 折叠 -->
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item command="profile" :icon="User">基本资料</el-dropdown-item>
-              <el-dropdown-item command="avatar" :icon="Crop">更换头像</el-dropdown-item>
-              <el-dropdown-item command="password" :icon="EditPen">重置密码</el-dropdown-item>
-              <el-dropdown-item command="logout" :icon="SwitchButton">退出登录</el-dropdown-item>
+              <el-dropdown-item command="profile" :icon="User"
+                >基本资料</el-dropdown-item
+              >
+              <el-dropdown-item command="avatar" :icon="Crop"
+                >更换头像</el-dropdown-item
+              >
+              <el-dropdown-item command="password" :icon="EditPen"
+                >重置密码</el-dropdown-item
+              >
+              <el-dropdown-item command="logout" :icon="SwitchButton"
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
